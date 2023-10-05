@@ -63,16 +63,19 @@ class GameFragment : Fragment() {
     }
 
     private fun showFinalScoreDialog() {
+        Log.d("codeReach", "showfinalscoredialog")
         MaterialAlertDialogBuilder(requireContext()).apply {
             setTitle(getString(R.string.congratulations))
-            setMessage(getString(R.string.you_scored))
+            setMessage(getString(R.string.you_scored, viewModel.score.value?.toInt()))
             setNegativeButton(R.string.exit) { _, _ ->
                 exitGame()
             }
             setPositiveButton(R.string.play_again) { _, _ ->
                 restart()
             }
-        }
+        }.show()
+
+        // for show the dialogs you need call show method
     }
 
     private fun restart() {
@@ -87,9 +90,10 @@ class GameFragment : Fragment() {
         if (error) {
             binding.textField.error = getString(R.string.try_again)
             binding.textField.isErrorEnabled = true
+            binding.textInputEditText.text = null
         } else {
-            binding.textField.error = null
             binding.textField.isErrorEnabled = false
+            binding.textInputEditText.text = null
         }
     }
 
